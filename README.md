@@ -42,6 +42,14 @@ go mod download
 go build -o dill-monitor ./cmd/server
 ```
 
+4. Install the application with make:
+
+```bash
+make install
+```
+
+This will install the application to `~/.dill_monitor/` (Linux/macOS) or `%USERPROFILE%\.dill_monitor` (Windows).
+
 ## Configuration
 
 The application uses a JSON configuration file located at `config/config.json`. The file should contain a list of addresses to monitor with optional user-defined labels:
@@ -63,24 +71,128 @@ The application uses a JSON configuration file located at `config/config.json`. 
 }
 ```
 
+The server configuration is stored in `server_config.json`:
+
+```json
+{
+    "metricsPort": 9090,
+    "logLevel": "info",
+    "host": "0.0.0.0"
+}
+```
+
 ## Usage
+
+### Running the Application Directly
 
 Run the application with default settings:
 
 ```bash
-./dill-monitor
+~/.dill_monitor/dill-monitor
 ```
 
 Or specify custom configuration:
 
 ```bash
-./dill-monitor -config /path/to/config.json -metrics-port 9090
+~/.dill_monitor/dill-monitor -config=/path/to/config.json -server-config=/path/to/server_config.json
 ```
+
+### Running as a Service
+
+#### Linux (systemd)
+
+1. Create a systemd service file using tee:
+
+```bash
+sudo tee /etc/systemd/system/dill-monitor.service > /dev/null << EOT
+[Unit]
+Description=Dill Monitor Service
+After=network.target
+
+[Service]
+Type=simple
+User=$(whoami)
+ExecStart=$(echo $HOME)/.dill_monitor/dill-monitor
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOT
+```
+
+2. Enable and start the service:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable dill-monitor
+sudo systemctl start dill-monitor
+```
+
+3. Check service status:
+
+```bash
+sudo systemctl status dill-monitor
+```
+
+#### Windows
+
+1. Install NSSM (Non-Sucking Service Manager):
+   Download from https://nssm.cc/download
+
+2. Open Command Prompt as Administrator and navigate to NSSM directory:
+
+```cmd
+cd path\to\nssm\directory
+```
+
+3. Install the service:
+
+```cmd
+nssm install DillMonitor
+```
+
+4. In the GUI that appears:
+
+    - Path: `%USERPROFILE%\.dill_monitor\dill-monitor.exe`
+    - Startup directory: `%USERPROFILE%\.dill_monitor`
+    - Service name: DillMonitor
+
+5. Start the service:
+
+```cmd
+nssm start DillMonitor
+```
+
+### Using Docker
+
+1. Build and run with Docker:
+
+```bash
+docker build -t dill-monitor .
+docker run -d -p 9090:9090 -v $(pwd)/config:/app/config --name dill-monitor dill-monitor
+```
+
+2. Or use Docker Compose for a complete monitoring stack:
+
+```bash
+docker-compose up -d
+```
+
+This will start:
+
+-   Dill Monitor on port 9090
+-   Prometheus on port 9091
+-   Grafana on port 3000
+
+Access Grafana at http://localhost:3000 (default login: admin/admin)
 
 ### Command Line Arguments
 
 -   `-config`: Path to the configuration file (default: "config/config.json")
--   `-metrics-port`: Port for Prometheus metrics (default: 9090)
+-   `-server-config`: Path to the server configuration file (default: "config/server_config.json")
 
 ## Metrics
 
@@ -132,6 +244,8 @@ The application exposes the following Prometheus metrics:
 ├── cmd/
 │   ├── server/          # Application entry point
 │   └── test/            # Test utilities
+├── config/              # Configuration files
+├── docker/              # Docker-related files
 ├── internal/
 │   ├── api/             # API client implementations
 │   ├── config/          # Configuration management
@@ -139,8 +253,12 @@ The application exposes the following Prometheus metrics:
 │   ├── repository/      # Data storage interfaces and implementations
 │   ├── service/         # Business logic
 │   └── util/            # Utility functions
-└── pkg/
-    └── metrics/         # Prometheus metrics
+├── pkg/
+│   └── metrics/         # Prometheus metrics
+├── prometheus/          # Prometheus configuration
+├── Dockerfile
+├── docker-compose.yml
+└── Makefile
 ```
 
 ### Adding New Features
