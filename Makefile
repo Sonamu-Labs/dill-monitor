@@ -64,13 +64,15 @@ install: build
 ifeq ($(OS),windows)
 	$(CP) $(BINARY_NAME)$(BINARY_EXT) $(INSTALL_DIR)
 	@echo "Copying configuration files..."
-	-$(CP) $(CONFIG_DIR)\config.json $(INSTALL_DIR)
-	-$(CP) $(CONFIG_DIR)\server_config.json $(INSTALL_DIR)
+	-if exist $(CONFIG_DIR)\exam_config.json ($(CP) $(CONFIG_DIR)\exam_config.json $(INSTALL_DIR)\config.json)
+	-if not exist $(CONFIG_DIR)\exam_config.json if not exist $(CONFIG_DIR)\config.json (echo {"addresses":[]} > $(INSTALL_DIR)\config.json)
+	-if exist $(CONFIG_DIR)\server_config.json ($(CP) $(CONFIG_DIR)\server_config.json $(INSTALL_DIR))
 else
 	$(CP) $(BINARY_NAME)$(BINARY_EXT) $(INSTALL_DIR)/
 	@echo "Copying configuration files..."
-	-$(CP) $(CONFIG_DIR)/config.json $(INSTALL_DIR)/
-	-$(CP) $(CONFIG_DIR)/server_config.json $(INSTALL_DIR)/
+	-if [ -f $(CONFIG_DIR)/exam_config.json ]; then $(CP) $(CONFIG_DIR)/exam_config.json $(INSTALL_DIR)/config.json; \
+	elif [ ! -f $(CONFIG_DIR)/config.json ]; then echo '{"addresses":[]}' > $(INSTALL_DIR)/config.json; fi
+	-if [ -f $(CONFIG_DIR)/server_config.json ]; then $(CP) $(CONFIG_DIR)/server_config.json $(INSTALL_DIR)/; fi
 	chmod +x $(INSTALL_DIR)/$(BINARY_NAME)
 endif
 	@echo "Installation completed!"
