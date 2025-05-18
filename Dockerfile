@@ -26,16 +26,21 @@ COPY --from=builder /app/dill-monitor /app/dill-monitor
 # Create config directory
 RUN mkdir -p /app/config
 
-# Handle configuration files
-RUN mkdir -p /tmp/config-setup
-COPY config/ /tmp/config-setup/
-RUN if [ -f /tmp/config-setup/config.json ]; then cp /tmp/config-setup/config.json /app/config/; fi && \
-    if [ -f /tmp/config-setup/server_config.json ]; then cp /tmp/config-setup/server_config.json /app/config/; fi && \
-    rm -rf /tmp/config-setup
+# Create entrypoint script
+RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
+    echo 'if [ ! -f /app/config/config.json ]; then' >> /app/entrypoint.sh && \
+    echo '  echo "Creating default config.json"' >> /app/entrypoint.sh && \
+    echo '  echo "{\"addresses\":[]}" > /app/config/config.json' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    echo 'if [ ! -f /app/config/server_config.json ]; then' >> /app/entrypoint.sh && \
+    echo '  echo "Creating default server_config.json"' >> /app/entrypoint.sh && \
+    echo '  echo "{\"metricsPort\":9090,\"logLevel\":\"info\",\"host\":\"0.0.0.0\"}" > /app/config/server_config.json' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    echo 'exec /app/dill-monitor -config=/app/config/config.json -server-config=/app/config/server_config.json "$@"' >> /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
 
 # Create volume for persistent data
-VOLUME ["/app/config"]
+VOLUME ["/.dill_monitor/config"]
 
-# Set the entry point
-ENTRYPOINT ["/app/dill-monitor"]
-CMD ["-config=/app/config/config.json", "-server-config=/app/config/server_config.json"]
+# Set the entry point to our script
+ENTRYPOINT ["/app/entrypoint.sh"]
