@@ -83,8 +83,10 @@ install-system: build
 ifneq ($(OS),windows)
 	sudo $(CP) $(BINARY_NAME) /usr/local/bin/
 	sudo $(MKDIR) /etc/dill_monitor
-	-sudo $(CP) $(CONFIG_DIR)/config.json /etc/dill_monitor/
-	-sudo $(CP) $(CONFIG_DIR)/server_config.json /etc/dill_monitor/
+	-if [ -f $(CONFIG_DIR)/exam_config.json ]; then sudo $(CP) $(CONFIG_DIR)/exam_config.json /etc/dill_monitor/config.json; \
+	elif [ ! -f $(CONFIG_DIR)/config.json ]; then echo '{"addresses":[]}' | sudo tee /etc/dill_monitor/config.json > /dev/null; fi
+	-if [ -f $(CONFIG_DIR)/exam_server.json ]; then sudo $(CP) $(CONFIG_DIR)/exam_server.json /etc/dill_monitor/server_config.json; \
+	elif [ ! -f $(CONFIG_DIR)/server_config.json ]; then echo '{"metricsPort":9090,"logLevel":"info","host":"0.0.0.0"}' | sudo tee /etc/dill_monitor/server_config.json > /dev/null; fi
 	@echo "System-wide installation completed!"
 	@echo "Configuration files are located at: /etc/dill_monitor/"
 else
