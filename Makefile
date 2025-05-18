@@ -64,13 +64,13 @@ install: build
 ifeq ($(OS),windows)
 	$(CP) $(BINARY_NAME)$(BINARY_EXT) $(INSTALL_DIR)
 	@echo "Copying configuration files..."
-	-if not exist $(INSTALL_DIR)\config.json ($(CP) $(CONFIG_DIR)\exam_config.json $(INSTALL_DIR)\config.json)
-	-if not exist $(INSTALL_DIR)\server_config.json ($(CP) $(CONFIG_DIR)\exam_server_config.json $(INSTALL_DIR)\server_config.json)
+	-$(CP) $(CONFIG_DIR)\config.json $(INSTALL_DIR)
+	-$(CP) $(CONFIG_DIR)\server_config.json $(INSTALL_DIR)
 else
 	$(CP) $(BINARY_NAME)$(BINARY_EXT) $(INSTALL_DIR)/
 	@echo "Copying configuration files..."
-	-if [ ! -f $(INSTALL_DIR)/config.json ]; then $(CP) $(CONFIG_DIR)/exam_config.json $(INSTALL_DIR)/config.json; fi
-	-if [ ! -f $(INSTALL_DIR)/server_config.json ]; then $(CP) $(CONFIG_DIR)/exam_server_config.json $(INSTALL_DIR)/server_config.json; fi
+	-$(CP) $(CONFIG_DIR)/config.json $(INSTALL_DIR)/
+	-$(CP) $(CONFIG_DIR)/server_config.json $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(BINARY_NAME)
 endif
 	@echo "Installation completed!"

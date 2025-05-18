@@ -27,3 +27,4 @@ csv_exporter/
 dill_sender/
 config/config.json
 balances.json
+config/server.json
