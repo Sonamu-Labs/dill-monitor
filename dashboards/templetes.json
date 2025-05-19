@@ -1,0 +1,961 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "id": 10,
+    "links": [],
+    "panels": [
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "panels": [],
+            "title": "System Overview",
+            "type": "row"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 1
+            },
+            "id": 2,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "total_address_count",
+                    "refId": "A"
+                }
+            ],
+            "title": "Total Addresses",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 1
+            },
+            "id": 3,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "total_validator_count",
+                    "refId": "A"
+                }
+            ],
+            "title": "Total Validators",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 12,
+                "y": 1
+            },
+            "id": 4,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "active_validator_count",
+                    "refId": "A"
+                }
+            ],
+            "title": "Active Validators",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 18,
+                "y": 1
+            },
+            "id": 5,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "total_balance",
+                    "refId": "A"
+                }
+            ],
+            "title": "Total Balance (DILL)",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 5
+            },
+            "id": 6,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "total_staked_amount",
+                    "refId": "A"
+                }
+            ],
+            "title": "Total Staked (DILL)",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 5
+            },
+            "id": 7,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "total_reward",
+                    "refId": "A"
+                }
+            ],
+            "title": "Total Reward (DILL)",
+            "type": "stat"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": []
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 5
+            },
+            "id": 8,
+            "options": {
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "expr": "validator_status_count",
+                    "legendFormat": "{{status}}",
+                    "refId": "A"
+                }
+            ],
+            "title": "Validator Status Distribution",
+            "type": "piechart"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 13
+            },
+            "id": 9,
+            "panels": [],
+            "title": "Account Details",
+            "type": "row"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "align": "auto",
+                        "cellOptions": {
+                            "type": "auto"
+                        },
+                        "filterable": true,
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 10,
+                "w": 24,
+                "x": 0,
+                "y": 14
+            },
+            "id": 10,
+            "options": {
+                "cellHeight": "sm",
+                "enablePagination": true,
+                "footer": {
+                    "countRows": false,
+                    "fields": [],
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": true
+                },
+                "showHeader": true,
+                "sortBy": [
+                    {
+                        "desc": false,
+                        "displayName": "label"
+                    }
+                ]
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "account_balance{label=~\"$label\", address=~\"$address\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "interval": "",
+                    "legendFormat": "{{label_name}}",
+                    "range": false,
+                    "refId": "A"
+                },
+                {
+                    "editorMode": "code",
+                    "expr": "reward_amount{label=~\"$label\", address=~\"$address\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "refId": "B"
+                },
+                {
+                    "expr": "staked_amount{label=~\"$label\", address=~\"$address\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Account Summary",
+            "transformations": [
+                {
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "address",
+                        "mode": "outer"
+                    }
+                },
+                {
+                    "id": "groupBy",
+                    "options": {
+                        "fields": {
+                            "Time": {
+                                "aggregations": []
+                            },
+                            "Value #A": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "Value #B": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "Value #C": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "Value #D": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "address": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "instance": {
+                                "aggregations": []
+                            },
+                            "instance 1": {
+                                "aggregations": []
+                            },
+                            "label": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time": false,
+                            "Time 1": true,
+                            "Time 2": true,
+                            "Time 3": true,
+                            "Value #B": false,
+                            "__name__": true,
+                            "__name__ 1": true,
+                            "__name__ 2": true,
+                            "__name__ 3": true,
+                            "address": false,
+                            "instance": true,
+                            "instance 1": true,
+                            "instance 2": true,
+                            "instance 3": true,
+                            "job": true,
+                            "job 1": true,
+                            "job 3": true,
+                            "label": false,
+                            "label 1": false,
+                            "label 2": true,
+                            "label 3": true,
+                            "label 4": true
+                        },
+                        "includeByName": {},
+                        "indexByName": {
+                            "Value #A": 2,
+                            "Value #B": 4,
+                            "Value #C": 6,
+                            "Value #D": 8,
+                            "address": 1,
+                            "label 1": 0,
+                            "label 2": 3,
+                            "label 3": 5,
+                            "label 4": 7
+                        },
+                        "renameByName": {
+                            "Time": "",
+                            "Time 2": "",
+                            "Value": "Balance",
+                            "Value #A": "Balance",
+                            "Value #B": "Reward Dill",
+                            "Value #C": "Delegate Amount",
+                            "Value #D": "daily_reward_amount",
+                            "Value 1": "Reward",
+                            "Value 2": "Staked",
+                            "Value 3": "Daily Reward",
+                            "__name__": "",
+                            "__name__ 2": "",
+                            "address": "Address",
+                            "instance 2": "",
+                            "job": "",
+                            "label": "",
+                            "label 1": "",
+                            "label 2": "",
+                            "label 4": ""
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 24
+            },
+            "id": 11,
+            "panels": [],
+            "title": "Validator Details",
+            "type": "row"
+        },
+        {
+            "datasource": "prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "left",
+                        "cellOptions": {
+                            "type": "auto"
+                        },
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "validator_balance"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "none"
+                            },
+                            {
+                                "id": "decimals",
+                                "value": 4
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 10,
+                "w": 24,
+                "x": 0,
+                "y": 25
+            },
+            "id": 12,
+            "options": {
+                "cellHeight": "sm",
+                "enablePagination": true,
+                "footer": {
+                    "countRows": false,
+                    "fields": [
+                        "Value #B",
+                        "Value #E",
+                        "Value #C"
+                    ],
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": true
+                },
+                "showHeader": true,
+                "sortBy": [
+                    {
+                        "desc": false,
+                        "displayName": "label"
+                    }
+                ]
+            },
+            "pluginVersion": "11.3.1",
+            "targets": [
+                {
+                    "editorMode": "code",
+                    "expr": "validator_status_info{label=~\"$label\", validator_idx=~\"$validator\", status=\"active_ongoing\"}",
+                    "format": "table",
+                    "instant": true,
+                    "refId": "A"
+                },
+                {
+                    "editorMode": "code",
+                    "expr": "validator_balance{label=~\"$label\", validator_idx=~\"$validator\"}*1e9",
+                    "format": "table",
+                    "instant": true,
+                    "refId": "B"
+                },
+                {
+                    "expr": "validator_reward{label=~\"$label\", validator_idx=~\"$validator\"}",
+                    "format": "table",
+                    "instant": true,
+                    "refId": "C"
+                },
+                {
+                    "editorMode": "code",
+                    "expr": "validator_last_epoch{label=~\"$label\", validator_idx=~\"$validator\"}",
+                    "format": "table",
+                    "instant": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fematfnwa21vkb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "daily_reward_amount{label=~\"$label\", address=~\"$address\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "",
+                    "range": false,
+                    "refId": "E"
+                }
+            ],
+            "title": "Validator Summary",
+            "transformations": [
+                {
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "label",
+                        "mode": "outer"
+                    }
+                },
+                {
+                    "disabled": true,
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "label",
+                        "mode": "inner"
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time 1": true,
+                            "Time 2": true,
+                            "Time 3": true,
+                            "Time 4": true,
+                            "Time 5": true,
+                            "Value #A": true,
+                            "Value #C": false,
+                            "__name__ 1": true,
+                            "__name__ 2": true,
+                            "__name__ 3": true,
+                            "__name__ 4": true,
+                            "instance 1": true,
+                            "instance 2": true,
+                            "instance 3": true,
+                            "instance 4": true,
+                            "instance 5": true,
+                            "job 1": true,
+                            "job 2": true,
+                            "job 3": true,
+                            "job 4": true,
+                            "job 5": true,
+                            "label 2": true,
+                            "label 3": true,
+                            "label 4": true,
+                            "validator_idx 1": false,
+                            "validator_idx 2": true,
+                            "validator_idx 3": true,
+                            "validator_idx 4": true
+                        },
+                        "includeByName": {},
+                        "indexByName": {
+                            "Time 1": 9,
+                            "Time 2": 13,
+                            "Time 3": 17,
+                            "Time 4": 21,
+                            "Time 5": 28,
+                            "Value #A": 5,
+                            "Value #B": 6,
+                            "Value #C": 8,
+                            "Value #D": 4,
+                            "Value #E": 7,
+                            "__name__ 1": 10,
+                            "__name__ 2": 14,
+                            "__name__ 3": 18,
+                            "__name__ 4": 22,
+                            "address": 2,
+                            "instance 1": 11,
+                            "instance 2": 15,
+                            "instance 3": 19,
+                            "instance 4": 23,
+                            "instance 5": 29,
+                            "job 1": 12,
+                            "job 2": 16,
+                            "job 3": 20,
+                            "job 4": 24,
+                            "job 5": 30,
+                            "label": 0,
+                            "status": 3,
+                            "validator_idx 1": 1,
+                            "validator_idx 2": 25,
+                            "validator_idx 3": 26,
+                            "validator_idx 4": 27
+                        },
+                        "renameByName": {
+                            "Time 1": "",
+                            "Time 2": "",
+                            "Time 3": "",
+                            "Value": "Status",
+                            "Value #A": "validator_status",
+                            "Value #B": "validator_balance",
+                            "Value #C": "last_epoch_reward",
+                            "Value #D": "validator_last_epoch",
+                            "Value #E": "Daily_reward_abount",
+                            "Value 1": "Balance",
+                            "Value 2": "Reward",
+                            "Value 3": "Last Epoch",
+                            "__name__ 2": "",
+                            "__name__ 4": "",
+                            "instance 1": "",
+                            "instance 2": "",
+                            "instance 4": "",
+                            "job 1": "",
+                            "job 2": "",
+                            "job 4": "",
+                            "label": "Label",
+                            "label 1": "",
+                            "label 4": "",
+                            "validator_idx": "Validator Index"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        }
+    ],
+    "preload": false,
+    "refresh": "10s",
+    "schemaVersion": 40,
+    "tags": [
+        "dill",
+        "blockchain",
+        "prometheus"
+    ],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
+                },
+                "datasource": "prometheus",
+                "definition": "label_values(account_balance, label)",
+                "includeAll": true,
+                "label": "Label",
+                "multi": true,
+                "name": "label",
+                "options": [],
+                "query": "label_values(account_balance, label)",
+                "type": "query"
+            },
+            {
+                "current": {
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
+                },
+                "datasource": "prometheus",
+                "definition": "label_values(account_balance{label=~\"$label\"}, address)",
+                "includeAll": true,
+                "label": "Address",
+                "multi": true,
+                "name": "address",
+                "options": [],
+                "query": "label_values(account_balance{label=~\"$label\"}, address)",
+                "type": "query"
+            },
+            {
+                "current": {
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
+                },
+                "datasource": "prometheus",
+                "definition": "label_values(validator_status{label=~\"$label\"}, validator_idx)",
+                "includeAll": true,
+                "label": "Validator",
+                "multi": true,
+                "name": "validator",
+                "options": [],
+                "query": "label_values(validator_status{label=~\"$label\"}, validator_idx)",
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-6h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "DILL Blockchain Monitoring",
+    "uid": "dill-blockchain-monitoring",
+    "version": 10,
+    "weekStart": ""
+}

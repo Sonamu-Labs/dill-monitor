@@ -40,7 +40,7 @@ RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
     chmod +x /app/entrypoint.sh
 
 # Create volume for persistent data
-VOLUME ["/.dill_monitor/config"]
+VOLUME ["/app/config"]
 
 # Set the entry point to our script
 ENTRYPOINT ["/app/entrypoint.sh"]
