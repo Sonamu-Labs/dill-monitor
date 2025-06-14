@@ -10,9 +10,18 @@ services:
     ports:
       - '19090:9090'
     volumes:
-      - ./config:/app/config
+      - ./config:/app/config:ro
+      - ./templates:/app/templates:ro
+      - ./static:/app/static:ro
     networks:
       - dill-network
+    environment:
+      - TZ=Asia/Seoul
+    command:
+      [
+        '-config=/app/config/config.json',
+        '-server-config=/app/config/server_config.json',
+      ]
 
 networks:
   dill-network:
