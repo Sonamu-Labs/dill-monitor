@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>DILL Monitor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/css/style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        DILL Monitor
+      </h1>
+
+      <div
+        class="bg-white rounded-lg shadow-lg overflow-hidden"
+      >
+        <div class="p-6">
+          <div class="overflow-x-auto">
+            <table
+              class="min-w-full divide-y divide-gray-200"
+            >
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Label
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Address
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Balance
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="bg-white divide-y divide-gray-200"
+              >
+                {{range .Addresses}}
+                <tr class="hover:bg-gray-50">
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                  >
+                    {{.Label}}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  >
+                    {{.Address}}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm"
+                  >
+                    <span
+                      class="balance font-medium"
+                      data-address="{{.Address}}"
+                      >Loading...</span
+                    >
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const BALANCE_THRESHOLD = 36000;
+
+      // Function to format balance with proper decimal places
+      function formatBalance(value) {
+        if (!value) return '0';
+        // Convert to number and format with 6 decimal places
+        return Number(value).toFixed(6);
+      }
+
+      // Function to get color class based on balance
+      function getBalanceColorClass(balance) {
+        const numBalance = Number(balance);
+        if (numBalance >= BALANCE_THRESHOLD) {
+          return 'text-green-600'; // 36000 이상
+        } else {
+          return 'text-red-600'; // 36000 미만
+        }
+      }
+
+      // Function to fetch balance data
+      async function fetchBalances() {
+        try {
+          const response = await fetch('/metrics');
+          const text = await response.text();
+          const lines = text.split('\n');
+
+          // Parse Prometheus metrics
+          const balances = {};
+          lines.forEach((line) => {
+            if (line.startsWith('account_balance')) {
+              // Extract address and value using regex
+              const match = line.match(
+                /account_balance{address="([^"]+)",label="[^"]*"} (\d+\.?\d*)/
+              );
+              if (match) {
+                const address = match[1];
+                const value = match[2];
+                balances[address] = value;
+              }
+            }
+          });
+
+          // Update UI
+          document
+            .querySelectorAll('.balance')
+            .forEach((element) => {
+              const address = element.dataset.address;
+              const balance = balances[address] || '0';
+              const formattedBalance =
+                formatBalance(balance);
+              const colorClass =
+                getBalanceColorClass(balance);
+
+              // Remove existing color classes
+              element.classList.remove(
+                'text-green-600',
+                'text-red-600'
+              );
+              // Add new color class
+              element.classList.add(colorClass);
+
+              element.textContent = formattedBalance;
+            });
+
+          // Log for debugging
+          console.log('Fetched balances:', balances);
+        } catch (error) {
+          console.error('Error fetching balances:', error);
+        }
+      }
+
+      // Initial fetch
+      fetchBalances();
+
+      // Refresh every 30 seconds
+      setInterval(fetchBalances, 30000);
+    </script>
+  </body>
+</html>

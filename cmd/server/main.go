@@ -9,6 +9,7 @@ import (
 	"dill-monitor/pkg/metrics"
 	"flag"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -98,13 +99,47 @@ func main() {
 	// Initialize services
 	balanceService := service.NewBalanceService(promRepo)
 
-	// Start metrics server
+	// Create a new ServeMux for routing
+	mux := http.NewServeMux()
+
+	// Check if we're in test environment
+	isTestEnv := os.Getenv("DILL_ENV") == "test"
+
+	// Serve static files and web interface only in test environment
+	if isTestEnv {
+		log.Println("Running in test environment - web interface enabled")
+		// Serve static files
+		fs := http.FileServer(http.Dir("static"))
+		mux.Handle("/static/", http.StripPrefix("/static/", fs))
+
+		// Handle web interface
+		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			tmpl := template.Must(template.ParseFiles("templates/index.html"))
+			addresses := cfg.ListAddresses()
+			data := struct {
+				Addresses []models.Address
+			}{
+				Addresses: addresses,
+			}
+			tmpl.Execute(w, data)
+		})
+	} else {
+		log.Println("Running in production environment - web interface disabled")
+		// Redirect root to metrics endpoint in production
+		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/metrics", http.StatusMovedPermanently)
+		})
+	}
+
+	// Handle metrics endpoint
+	mux.Handle("/metrics", promhttp.Handler())
+
+	// Start the server
+	addr := fmt.Sprintf("%s:%d", serverCfg.Host, serverCfg.MetricsPort)
+	log.Printf("Starting server on %s", addr)
 	go func() {
-		http.Handle("/metrics", promhttp.Handler())
-		addr := fmt.Sprintf("%s:%d", serverCfg.Host, serverCfg.MetricsPort)
-		log.Printf("Starting metrics server on %s", addr)
-		if err := http.ListenAndServe(addr, nil); err != nil {
-			log.Fatalf("Failed to start metrics server: %v", err)
+		if err := http.ListenAndServe(addr, mux); err != nil {
+			log.Fatalf("Failed to start server: %v", err)
 		}
 	}()
 

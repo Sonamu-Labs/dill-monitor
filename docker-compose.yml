@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-    dill-monitor:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        container_name: dill-monitor
-        restart: unless-stopped
-        ports:
-            - '9090:9090'
-        volumes:
-            - ./config:/app/config
+  dill-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dill-monitor
+    restart: unless-stopped
+    ports:
+      - '9390:9090'
+    volumes:
+      - ./config:/app/config

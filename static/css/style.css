@@ -1,0 +1,54 @@
+/* Custom styles for DILL Monitor */
+
+/* Smooth transitions */
+.balance {
+  transition: all 0.3s ease;
+}
+
+/* Loading animation */
+.balance:empty::before {
+  content: 'Loading...';
+  color: #9ca3af;
+}
+
+/* Hover effects */
+tr:hover .balance {
+  color: #2563eb;
+}
+
+/* Responsive table */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  table {
+    font-size: 0.875rem;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
