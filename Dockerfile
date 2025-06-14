@@ -17,8 +17,8 @@ FROM alpine:latest
 
 WORKDIR /app
 
-# Install CA certificates for HTTPS requests
-RUN apk --no-cache add ca-certificates tzdata
+# Install CA certificates and curl for healthcheck
+RUN apk --no-cache add ca-certificates tzdata curl
 
 # Copy the binary from builder stage
 COPY --from=builder /app/dill-monitor /app/dill-monitor
@@ -41,6 +41,9 @@ RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
 
 # Create volume for persistent data
 VOLUME ["/app/config"]
+
+# Expose the metrics port
+EXPOSE 9090
 
 # Set the entry point to our script
 ENTRYPOINT ["/app/entrypoint.sh"]

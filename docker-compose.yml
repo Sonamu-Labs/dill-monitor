@@ -8,6 +8,12 @@ services:
     container_name: dill-monitor
     restart: unless-stopped
     ports:
-      - '9390:9090'
+      - '19090:9090'
     volumes:
       - ./config:/app/config
+    networks:
+      - dill-network
+
+networks:
+  dill-network:
+    driver: bridge
